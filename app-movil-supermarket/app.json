@@ -1,0 +1,68 @@
+{
+  "expo": {
+    "name": "Supermarket",
+    "slug": "supermarket-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "scheme": "supermarket",
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Supermarket usa la cámara para escanear el código QR o de barras de un producto y encontrarlo al instante."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Supermarket accede a tus fotos para que puedas asignarle una imagen a un producto.",
+          "cameraPermission": "Supermarket usa la cámara para fotografiar un producto y asignarle su imagen."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
+      "expo-font",
+      "@react-native-community/datetimepicker"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.supermarket.app",
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsLocalNetworking": true
+        }
+      }
+    },
+    "android": {
+      "package": "com.supermarket.app",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "backgroundColor": "#0F172A",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ],
+      "softwareKeyboardLayoutMode": "resize",
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "19fc485b-b8e1-4762-9ec2-61e307ba51c4"
+      }
+    }
+  }
+}
