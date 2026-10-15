@@ -130,6 +130,10 @@ php artisan serve
 
 Abre [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
+## Integración continua
+
+El flujo `.github/workflows/laravel-checks.yml` está configurado para ejecutar migraciones y pruebas con MySQL 8, además de compilar los recursos frontend, al abrir un Pull Request hacia `main` o al publicar cambios en `main`. El resultado debe revisarse en la pestaña **Actions** de GitHub; la existencia del flujo no significa que ya haya pasado.
+
 ## Pruebas
 
 Ejecuta:
