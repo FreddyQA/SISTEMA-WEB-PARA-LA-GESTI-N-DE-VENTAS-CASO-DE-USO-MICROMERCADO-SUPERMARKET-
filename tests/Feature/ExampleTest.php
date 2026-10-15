@@ -2,24 +2,23 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
-    public function test_the_application_returns_a_successful_response(): void
+    public function test_guest_root_redirects_to_login(): void
     {
         $response = $this->get('/');
 
-        $response->assertStatus(200);
+        $response->assertRedirect('/login');
     }
 
-    public function test_guest_home_page_shows_branding(): void
+    public function test_login_page_shows_branding(): void
     {
-        $response = $this->get('/');
+        $response = $this->get('/login');
 
-        $response->assertStatus(200);
-        $response->assertSee('Micromercado');
-        $response->assertSee('Sistema de ventas');
+        $response->assertOk();
+        $response->assertSee('Iniciar Sesión');
+        $response->assertSee('Supermarket');
     }
 }
