@@ -7,35 +7,30 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Add role and profile-photo fields without recreating the users table.
+     * Add role and profile-photo fields to the users table.
      */
     public function up(): void
     {
         if (!Schema::hasTable('users')) {
-            Schema::create('users', function (Blueprint $table) {
-                $table->id();
-                $table->string('name');
-                $table->string('email')->unique();
-                $table->timestamp('email_verified_at')->nullable();
-                $table->string('password');
-                $table->string('rol')->default('invitado');
-                $table->string('foto')->nullable();
-                $table->rememberToken();
-                $table->timestamps();
-            });
-
-            return;
+            throw new RuntimeException(
+                'The users table must exist before adding role and profile-photo fields.'
+            );
         }
 
-        Schema::table('users', function (Blueprint $table) {
-            if (!Schema::hasColumn('users', 'rol')) {
-                $table->string('rol')->default('invitado');
-            }
+        $hasRol = Schema::hasColumn('users', 'rol');
+        $hasFoto = Schema::hasColumn('users', 'foto');
 
-            if (!Schema::hasColumn('users', 'foto')) {
-                $table->string('foto')->nullable();
-            }
-        });
+        if (!$hasRol || !$hasFoto) {
+            Schema::table('users', function (Blueprint $table) use ($hasRol, $hasFoto) {
+                if (!$hasRol) {
+                    $table->string('rol')->default('invitado');
+                }
+
+                if (!$hasFoto) {
+                    $table->string('foto')->nullable();
+                }
+            });
+        }
     }
 
     /**
@@ -47,14 +42,19 @@ return new class extends Migration
             return;
         }
 
-        Schema::table('users', function (Blueprint $table) {
-            if (Schema::hasColumn('users', 'foto')) {
-                $table->dropColumn('foto');
-            }
+        $hasFoto = Schema::hasColumn('users', 'foto');
+        $hasRol = Schema::hasColumn('users', 'rol');
 
-            if (Schema::hasColumn('users', 'rol')) {
-                $table->dropColumn('rol');
-            }
-        });
+        if ($hasFoto || $hasRol) {
+            Schema::table('users', function (Blueprint $table) use ($hasFoto, $hasRol) {
+                if ($hasFoto) {
+                    $table->dropColumn('foto');
+                }
+
+                if ($hasRol) {
+                    $table->dropColumn('rol');
+                }
+            });
+        }
     }
 };
