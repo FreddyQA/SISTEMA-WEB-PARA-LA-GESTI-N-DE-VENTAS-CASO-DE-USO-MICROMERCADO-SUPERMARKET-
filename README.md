@@ -1,59 +1,170 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema web de ventas para el micromercado SuperMarket
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplicación web desarrollada con **Laravel 12**, **PHP 8.2 o superior**, **MySQL**, **Bootstrap 5** y **Vite** para apoyar la administración de productos, categorías, clientes y pedidos de un micromercado.
 
-## About Laravel
+> **Estado de esta documentación:** describe los módulos y rutas encontrados en la rama `main`. Antes de presentar el sistema como terminado, se deben ejecutar las pruebas y comprobar cada flujo en un entorno local.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Funcionalidades identificadas en el código
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Inicio de sesión y cierre de sesión.
+- Panel principal con indicadores y gráficos de ventas, pedidos, productos destacados, clientes y stock bajo.
+- Consulta de categorías, productos, clientes y pedidos.
+- Operaciones de administración para categorías, productos, clientes, pedidos y usuarios, protegidas por autenticación y middleware de rol.
+- Gestión de proveedores mediante modelos y migraciones.
+- Papelera, restauración y eliminación definitiva de productos.
+- Exportación de productos y reportes de ventas a PDF y Excel.
+- Campos y paquetes para códigos QR y códigos de barras; comprobar su integración en la interfaz antes de afirmar que todo el flujo está terminado.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+La aplicación usa roles configurados en el código. Verifica los nombres de rol permitidos y los permisos de cada pantalla en el entorno de ejecución antes de asignar cuentas reales.
 
-## Learning Laravel
+## Tecnologías y dependencias
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- PHP `^8.2`
+- Laravel `^12.0`
+- MySQL
+- Node.js y npm
+- Bootstrap 5, Sass y Vite
+- DomPDF para exportación PDF
+- Maatwebsite Excel para exportación Excel
+- Bibliotecas QR y códigos de barras
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Las versiones exactas instaladas se encuentran en `composer.lock` y `package-lock.json` si este último está presente.
 
-## Laravel Sponsors
+## Requisitos previos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Instala y verifica:
 
-### Premium Partners
+1. PHP 8.2 o superior, con las extensiones requeridas por Laravel.
+2. Composer.
+3. Node.js y npm.
+4. MySQL (por ejemplo, mediante XAMPP).
+5. Git, si clonarás el repositorio.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Comprueba las versiones con:
 
-## Contributing
+```bash
+php -v
+composer --version
+node -v
+npm -v
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Instalación local
 
-## Code of Conduct
+### 1. Clonar el repositorio
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+git clone https://github.com/FreddyQA/SISTEMA-WEB-PARA-LA-GESTI-N-DE-VENTAS-CASO-DE-USO-MICROMERCADO-SUPERMARKET-.git
+cd SISTEMA-WEB-PARA-LA-GESTI-N-DE-VENTAS-CASO-DE-USO-MICROMERCADO-SUPERMARKET-
+```
 
-## Security Vulnerabilities
+### 2. Instalar dependencias PHP
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+composer install
+```
 
-## License
+### 3. Crear el archivo de entorno
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+En Windows CMD:
+
+```bat
+copy .env.example .env
+```
+
+En PowerShell o Git Bash también puedes copiar `.env.example` a `.env`.
+
+### 4. Crear y configurar la base de datos
+
+En MySQL crea una base de datos llamada `supermarket` (o cambia el nombre en `.env`). Configura las variables de conexión en `.env`:
+
+```dotenv
+APP_NAME=Supermarket
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://127.0.0.1:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=supermarket
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Ajusta el usuario y la contraseña a la configuración de tu MySQL. No copies el archivo `.env` al repositorio ni compartas sus secretos.
+
+### 5. Generar la clave y ejecutar migraciones
+
+```bash
+php artisan key:generate
+php artisan migrate
+```
+
+Si necesitas datos de demostración, revisa primero `database/seeders/DatabaseSeeder.php`. El seeder actual crea cuentas de ejemplo con contraseñas conocidas por estar definidas en el código; **no lo ejecutes en producción**. Para una instalación local de pruebas, puedes ejecutar:
+
+```bash
+php artisan db:seed
+```
+
+Después de usar datos de demostración, cambia o elimina las cuentas y contraseñas de ejemplo.
+
+### 6. Instalar dependencias de interfaz
+
+```bash
+npm install
+npm run build
+```
+
+### 7. Enlazar almacenamiento público (si se usan imágenes)
+
+```bash
+php artisan storage:link
+```
+
+### 8. Iniciar el servidor
+
+```bash
+php artisan serve
+```
+
+Abre [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+## Pruebas
+
+Ejecuta:
+
+```bash
+php artisan test
+```
+
+La rama revisada contiene pruebas de ejemplo en `tests/Feature/ExampleTest.php` y `tests/Unit/ExampleTest.php`. No se debe dar por confirmada ninguna cifra de pruebas o aserciones hasta ejecutar el comando y guardar la salida real.
+
+## Estructura principal
+
+- `app/Models`: modelos de la aplicación.
+- `app/Http/Controllers`: controladores de módulos, autenticación y reportes.
+- `app/Http/Middleware`: middleware de autorización por rol.
+- `database/migrations`: estructura de base de datos.
+- `database/seeders`: datos de demostración.
+- `resources/views`: vistas Blade.
+- `routes/web.php`: rutas web.
+- `tests`: pruebas automatizadas.
+
+## Alcance y limitaciones que deben verificarse
+
+- En la rama revisada no se encontró `routes/api.php` ni una carpeta de aplicación móvil React Native/Expo. Si la aplicación móvil forma parte de la entrega, enlaza su repositorio o incorpórala de forma controlada y actualiza esta sección.
+- La memoria del proyecto debe coincidir con los módulos y flujos que puedan demostrarse en el código y en una ejecución real.
+- No describas facturación electrónica, compras ni API móvil como implementadas sin evidencia verificable.
+
+## Seguridad antes de publicar o desplegar
+
+- Mantén `.env`, credenciales, claves y tokens fuera de Git.
+- Usa `APP_DEBUG=false` en producción.
+- No uses cuentas ni contraseñas de demostración en un entorno real.
+- Configura HTTPS y credenciales de base de datos específicas para el entorno.
+- Revisa el historial de commits si sospechas que alguna clave o archivo sensible se publicó anteriormente.
+
+## Licencia
+
+No se ha confirmado una licencia específica para este proyecto. Añade una sección de licencia solo después de definirla.
