@@ -79,10 +79,8 @@ class DashboardApiController extends Controller
                 ->where('fecha', '>=', $inicioMes)
                 ->sum('total'),
 
-            // El alias legado mantiene compatibles las apps móviles ya publicadas.
+            // Respuesta canónica del módulo de ventas para la app móvil.
             'ultimas_ventas' => $ultimasVentas,
-            'pedidos_hoy' => $transaccionesHoy,
-            'ultimos_pedidos' => $ultimasVentas,
         ]);
     }
 }

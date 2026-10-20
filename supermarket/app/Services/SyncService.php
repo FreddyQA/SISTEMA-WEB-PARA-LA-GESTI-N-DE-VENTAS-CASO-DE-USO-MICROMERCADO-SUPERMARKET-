@@ -69,7 +69,6 @@ class SyncService
                         'productos'  => (int) ($state['productos'] ?? 0),
                         'categorias' => (int) ($state['categorias'] ?? 0),
                         'ventas'     => $ventas,
-                        'pedidos'    => $ventas,
                         'global'     => (int) ($state['global'] ?? 0),
                     ];
                 }
@@ -81,7 +80,6 @@ class SyncService
             'productos'  => $now,
             'categorias' => $now,
             'ventas'     => $now,
-            'pedidos'    => $now,
             'global'     => $now,
         ];
     }

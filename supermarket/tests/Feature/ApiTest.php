@@ -100,14 +100,7 @@ class ApiTest extends TestCase
         ]);
         $response->assertCreated();
         $this->assertEquals(15.0, $response->json('data.total'));
-
-        $legacyResponse = $this->withHeader('Authorization', "Bearer {$token}")->postJson('/api/pedidos', [
-            'idCliente' => $cliente->idCliente,
-            'fecha' => now()->toDateString(),
-            'items' => [['idProducto' => $prod->idProducto, 'cantidad' => 1]],
-        ]);
-        $legacyResponse->assertCreated();
-        $this->withHeader('Authorization', "Bearer {$token}")->getJson('/api/pedidos')->assertOk()->assertJsonCount(2, 'data');
+        $this->withHeader('Authorization', "******")->getJson('/api/ventas')->assertOk()->assertJsonCount(1, 'data');
 
         $this->assertDatabaseHas('productos', ['idProducto' => $prod->idProducto, 'stock' => 6]);
     }
@@ -474,8 +467,7 @@ class ApiTest extends TestCase
         $response->assertOk();
         $this->assertEquals(100.0, $response->json('metricas.total_ventas'));
         $this->assertEquals(2, $response->json('metricas.cantidad_ventas'));
-        $this->assertEquals(2, $response->json('metricas.total_pedidos'));
+        $this->assertEquals(2, $response->json('metricas.cantidad_ventas'));
         $this->assertCount(2, $response->json('ventas.data'));
-        $this->assertCount(2, $response->json('pedidos.data'));
     }
 }

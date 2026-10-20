@@ -4,7 +4,8 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "verify": "grep -rniE \"pedido\" . --exclude-dir=vendor --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=storage --exclude=PROMPT_MAESTRO_Supermarket_v2.md"
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",

@@ -59,10 +59,8 @@ class ReporteApiController extends Controller
                 'total_ventas'    => $totalVentas,
                 'total_unidades' => $totalUnidades,
                 'promedio_venta' => $promedioVenta,
-                'total_pedidos' => $cantidadVentas,
             ],
             'ventas' => $ventasSerializadas,
-            'pedidos' => $ventasSerializadas,
         ]);
     }
 }

@@ -75,10 +75,6 @@ Route::middleware(['api.token', 'throttle:60,1'])->group(function () {
         Route::put('/ventas/{id}',         [VentaApiController::class, 'update']);
         Route::delete('/ventas/{id}',      [VentaApiController::class, 'destroy']);
 
-        // Conserva las llamadas antiguas de clientes móviles mientras migran a /ventas.
-        Route::put('/pedidos/{id}',         [VentaApiController::class, 'update']);
-        Route::delete('/pedidos/{id}',      [VentaApiController::class, 'destroy']);
-
         // Gestión completa de Cuentas de Usuario y Privilegios
         Route::get('/usuarios',             [UsuarioApiController::class, 'index']);
         Route::post('/usuarios',            [UsuarioApiController::class, 'store']);
@@ -103,9 +99,4 @@ Route::middleware(['api.token', 'throttle:60,1'])->group(function () {
     Route::get('/ventas',       [VentaApiController::class, 'index']);
     Route::get('/ventas/{id}',  [VentaApiController::class, 'show']);
     Route::post('/ventas',      [VentaApiController::class, 'store']);
-
-    // Alias temporales para versiones previas de la aplicación móvil.
-    Route::get('/pedidos',       [VentaApiController::class, 'index']);
-    Route::get('/pedidos/{id}',  [VentaApiController::class, 'show']);
-    Route::post('/pedidos',      [VentaApiController::class, 'store']);
 });

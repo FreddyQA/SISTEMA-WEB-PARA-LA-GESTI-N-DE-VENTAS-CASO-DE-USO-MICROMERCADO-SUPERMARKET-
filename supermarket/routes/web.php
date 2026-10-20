@@ -180,11 +180,6 @@ Route::middleware(['auth'])->group(function () {
     // Módulo de Ventas: Ambos roles pueden listar, crear y registrar ventas
     Route::resource('ventas',    VentaController::class)->only(['index', 'create', 'store']);
 
-    // Mantiene operativos enlaces antiguos y redirige el módulo a su URL canónica.
-    Route::get('/pedidos', fn () => redirect()->route('ventas.index'))->name('pedidos.index');
-    Route::get('/pedidos/create', fn () => redirect()->route('ventas.create'))->name('pedidos.create');
-    Route::post('/pedidos', [VentaController::class, 'store'])->name('pedidos.store');
-
     // Endpoint AJAX ligero para sincronización en vivo del catálogo y ventas (Web y Móvil)
     Route::get('/sync/estado', function () {
         return response()->json(\App\Services\SyncService::getState());
@@ -202,7 +197,6 @@ Route::middleware(['auth'])->group(function () {
             'ultimo_fecha'  => $ultimo?->created_at?->toISOString(),
         ]);
     })->name('ventas.poll');
-    Route::get('/pedidos/poll', fn () => redirect()->route('ventas.poll'))->name('pedidos.poll');
 
     // Generación y descarga de códigos QR y códigos de barras Code-128
     Route::get('/productos/{id}/qr',      [ProductoController::class, 'descargarQr'])->name('productos.qr');
@@ -220,11 +214,6 @@ Route::middleware(['auth', 'rol:administrador'])->group(function () {
 
     // Solo el administrador puede editar o eliminar ventas registrados
     Route::resource('ventas',    VentaController::class)->only(['edit', 'update', 'destroy']);
-
-    // Mantiene operativas las acciones que lleguen desde páginas abiertas con URLs antiguas.
-    Route::get('/pedidos/{id}/edit', fn ($id) => redirect()->route('ventas.edit', $id))->name('pedidos.edit');
-    Route::match(['put', 'patch'], '/pedidos/{id}', [VentaController::class, 'update'])->name('pedidos.update');
-    Route::delete('/pedidos/{id}', [VentaController::class, 'destroy'])->name('pedidos.destroy');
 
     // Reportes analíticos con exportación a PDF y Excel
     Route::get('/reportes/ventas',        [ReporteController::class, 'ventas'])->name('reportes.ventas');
